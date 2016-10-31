@@ -15,8 +15,10 @@ public class MongoConnection {
     private final MongoDatabase db;
     
     private MongoConnection(){
+        System.out.println("[MONGO] Connecting");
         client = new MongoClient(HOST, PORT);
         db = client.getDatabase(DBNAME);
+        System.out.println("[MONGO] Connected");
     }
     private static MongoConnection obj(){
         if(con == null){
