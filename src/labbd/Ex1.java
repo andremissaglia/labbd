@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.bson.Document;
 public class Ex1 {
     private ArrayList<Column> columns;
-
+    
     public Ex1() {
         columns = new ArrayList<>();
     }

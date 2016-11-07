@@ -7,19 +7,15 @@ package labbd;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author andrebm
  */
 public class Ex1Panel extends javax.swing.JPanel {
-    private Interface inter;
+    private final Interface inter;
     /**
      * Creates new form Ex1Panel
      * @param inter

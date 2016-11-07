@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package labbd;
 
 import java.sql.SQLException;
@@ -19,6 +14,7 @@ public class Interface extends javax.swing.JFrame {
     public Interface() {
         initComponents();
         jtpExercicios.addTab("Ex1", new Ex1Panel(this));
+        jtpExercicios.addTab("Ex4", new Ex4Panel(this));
     }
 
     /**
