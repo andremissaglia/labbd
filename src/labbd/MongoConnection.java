@@ -7,7 +7,7 @@ import com.mongodb.client.MongoDatabase;
 public class MongoConnection {
     private final static String HOST = "localhost";
     private final static int PORT = 27017;
-    private final static String DBNAME = "projetofinal";
+    private final static String DBNAME = "dblabbd";
     
     private static MongoConnection con;
     

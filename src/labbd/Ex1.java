@@ -13,7 +13,7 @@ public class Ex1 {
         columns = new ArrayList<>();
     }
     
-    public void oracle2Mongo(String table){
+    public String oracle2Mongo(String table){
         try {
             // Executa Select
             Statement stmt = OracleConnection.connection().createStatement();
@@ -28,6 +28,9 @@ public class Ex1 {
                 columns.add(col);
             }
             //Gera BSON
+            StringBuilder saida = new StringBuilder();
+            saida.append("use dblabbd\n");
+            saida.append(String.format("db.createCollection(\"%s\")\n",table));
             while(rs.next()){
                 Document doc = new Document();
                 for(Column col : columns){
@@ -54,12 +57,15 @@ public class Ex1 {
                             break;
                         default:
                             System.out.println(col.type);
+                            throw new RuntimeException("Tipo não tratado");
                     }                    
                 }
-                System.out.println(doc.toJson());
+                saida.append(String.format("db.%s.insert(%s)\n",table, doc.toJson()));
             }
+            return saida.toString();
         } catch (SQLException ex) {
         }
+        return null;
     }
     private class Column{
         public int id;
