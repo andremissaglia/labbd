@@ -1,12 +1,15 @@
-package labbd;
+package labbd.ex3;
 
-public class Ex4Panel extends javax.swing.JPanel {
+import labbd.ex2.*;
+import labbd.Interface;
+
+public class Ex3Panel extends javax.swing.JPanel {
     private final Interface inter;
     /**
      * Creates new form Ex4Panel
      * @param inter
      */
-    public Ex4Panel(Interface inter) {
+    public Ex3Panel(Interface inter) {
         initComponents();
         this.inter = inter;
     }

@@ -1,4 +1,4 @@
-package labbd;
+package labbd.connection;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;

@@ -1,4 +1,4 @@
-package labbd;
+package labbd.ex1;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

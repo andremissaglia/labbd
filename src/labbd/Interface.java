@@ -1,6 +1,12 @@
 package labbd;
 
+import labbd.connection.OracleConnection;
+import labbd.ex4.Ex4Panel;
+import labbd.ex1.Ex1Panel;
 import java.sql.SQLException;
+import labbd.ex2.Ex2Panel;
+import labbd.ex3.Ex3Panel;
+import labbd.ex5.Ex5Panel;
 
 /**
  *
@@ -14,7 +20,10 @@ public class Interface extends javax.swing.JFrame {
     public Interface() {
         initComponents();
         jtpExercicios.addTab("Ex1", new Ex1Panel(this));
+        jtpExercicios.addTab("Ex2", new Ex2Panel(this));
+        jtpExercicios.addTab("Ex3", new Ex3Panel(this));
         jtpExercicios.addTab("Ex4", new Ex4Panel(this));
+        jtpExercicios.addTab("Ex5", new Ex5Panel(this));
     }
 
     /**

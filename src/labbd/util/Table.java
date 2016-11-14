@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import labbd.OracleConnection;
+import labbd.connection.OracleConnection;
 
 public class Table {
     public ArrayList<Column> columns;
