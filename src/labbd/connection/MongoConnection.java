@@ -26,6 +26,9 @@ public class MongoConnection {
         }
         return con;
     }
+    public static MongoDatabase getDatabase(){
+        return obj().db;
+    }
     public static MongoCollection getCollection(String name){
         return obj().db.getCollection(name);
     }

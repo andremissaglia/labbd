@@ -62,7 +62,6 @@ public class Table {
         stmt.setString(1, this.name);
         try (ResultSet rs = stmt.executeQuery()) {
             while(rs.next()){
-                System.out.println("aaaa");
                 Column c = this.getColumn(rs.getString(1));
                 c.is_pk = true;
                 this.pk.add(c);
