@@ -133,6 +133,10 @@ public class Ex1Panel extends javax.swing.JPanel {
         String arquivo = jtfArquivo.getText();
         String saida = ex1.oracle2Mongo(tabela);
         jtaSaida.setText(saida);
+        if(saida == null){
+            inter.updateStatus("Erro ao gerar script!");
+            return;
+        }
         try {
             File f = new File(arquivo);
             FileWriter fw = new FileWriter(f);
