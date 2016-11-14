@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package labbd;
 
 import java.io.BufferedWriter;
@@ -140,10 +135,10 @@ public class Ex1Panel extends javax.swing.JPanel {
         jtaSaida.setText(saida);
         try {
             File f = new File(arquivo);
-            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-            bw.write(saida);
-            bw.flush();
-            bw.close();
+            FileWriter fw = new FileWriter(f);
+            try (BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(saida);
+            }
             inter.updateStatus("Script salvo em " + f.getAbsolutePath());
             System.out.println();
         } catch (IOException ex) {

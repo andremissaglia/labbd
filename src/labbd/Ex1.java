@@ -2,38 +2,25 @@ package labbd;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
-import java.util.ArrayList;
+import labbd.util.Column;
+import labbd.util.Table;
 import org.bson.Document;
 public class Ex1 {
-    private ArrayList<Column> columns;
     
-    public Ex1() {
-        columns = new ArrayList<>();
-    }
-    
-    public String oracle2Mongo(String table){
+    public String oracle2Mongo(String tablename){
         try {
-            // Executa Select
-            Statement stmt = OracleConnection.connection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM "+table);
-            //Pega as colunas
-            int count = rs.getMetaData().getColumnCount();
-            for(int i = 0; i < count; i++){
-                Column col = new Column();
-                col.id = i+1;
-                col.name = rs.getMetaData().getColumnName(col.id);
-                col.type = rs.getMetaData().getColumnType(col.id);
-                columns.add(col);
-            }
-            //Gera BSON
+            // Metadados da tabela
+            Table table = Table.getTableMetadata(tablename);
+            // Resultset com as tuplas
+            ResultSet rs = table.getLines();
+            // Gera BSON
             StringBuilder saida = new StringBuilder();
             saida.append("use dblabbd\n");
-            saida.append(String.format("db.createCollection(\"%s\")\n",table));
+            saida.append(String.format("db.createCollection(\"%s\")\n",tablename));
             while(rs.next()){
                 Document doc = new Document();
-                for(Column col : columns){
+                for(Column col : table.columns){
                     switch(col.type){
                         case Types.VARCHAR:
                         case Types.CHAR:
@@ -60,16 +47,12 @@ public class Ex1 {
                             throw new RuntimeException("Tipo não tratado");
                     }                    
                 }
-                saida.append(String.format("db.%s.insert(%s)\n",table, doc.toJson()));
+                saida.append(String.format("db.%s.insert(%s)\n",tablename, doc.toJson()));
             }
             return saida.toString();
         } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        return null;
-    }
-    private class Column{
-        public int id;
-        public String name;
-        public int type;
+        return "";
     }
 }
