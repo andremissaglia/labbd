@@ -16,7 +16,7 @@ public class Ex4Panel extends javax.swing.JPanel {
         initComponents();
         this.inter = inter;
         this.ex4 = new Ex4();
-        this.criterio = new AndCriterio();
+        this.criterio = new AndCriterio(null);
         this.pCriterio.add(this.criterio);
         
     }
