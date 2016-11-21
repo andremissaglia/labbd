@@ -15,8 +15,8 @@ public class Ex1 {
     private String collection;
     public String oracle2Mongo(String tablename) {
         inserts = new ArrayList<>();
-        collection = tablename;
         tablename = tablename.toUpperCase();
+        collection = tablename;
         try {
             // Metadados da tabela
             Table table = Table.getTableMetadata(tablename);
