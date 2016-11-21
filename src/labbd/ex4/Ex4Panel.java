@@ -3,15 +3,20 @@ package labbd.ex4;
 import labbd.ex4.Criterios.AndCriterio;
 import java.util.ArrayList;
 import labbd.Interface;
+import org.bson.Document;
 
 public class Ex4Panel extends javax.swing.JPanel {
+
     private final Interface inter;
     private final Ex4 ex4;
     private AndCriterio criterio;
     private String collection;
     private static Ex4Panel obj;
+    private Document findCriterio;
+
     /**
      * Creates new form Ex4Panel
+     *
      * @param inter
      */
     public Ex4Panel(Interface inter) {
@@ -19,8 +24,10 @@ public class Ex4Panel extends javax.swing.JPanel {
         this.inter = inter;
         this.ex4 = new Ex4();
         this.criterio = new AndCriterio(null);
+        this.pCriterio.removeAll();
         this.pCriterio.add(this.criterio);
         obj = this;
+        this.findCriterio = new Document();
     }
 
     /**
@@ -35,11 +42,15 @@ public class Ex4Panel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         cbCollections = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        btnSelecionar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
-        pCriterio = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         txtFilter = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
+        tabs = new javax.swing.JTabbedPane();
+        pCriterio = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taResultado = new javax.swing.JTextArea();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -52,13 +63,6 @@ public class Ex4Panel extends javax.swing.JPanel {
         });
 
         jLabel1.setText("Coleção:");
-
-        btnSelecionar.setText("Selecionar");
-        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelecionarActionPerformed(evt);
-            }
-        });
 
         btnAtualizar.setText("Atualizar");
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -77,10 +81,8 @@ public class Ex4Panel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbCollections, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSelecionar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAtualizar)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,54 +91,84 @@ public class Ex4Panel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCollections, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(btnSelecionar)
                     .addComponent(btnAtualizar))
                 .addContainerGap())
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtFilter.setEditable(false);
+
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(txtFilter)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPesquisar)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(btnPesquisar))
         );
 
         pCriterio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pCriterio.setAlignmentX(0.0F);
         pCriterio.setAlignmentY(0.0F);
         pCriterio.setLayout(new javax.swing.BoxLayout(pCriterio, javax.swing.BoxLayout.PAGE_AXIS));
+        tabs.addTab("Critério", pCriterio);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        taResultado.setColumns(20);
+        taResultado.setRows(5);
+        jScrollPane1.setViewportView(taResultado);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtFilter)
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
         );
+
+        tabs.addTab("Resultado", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pCriterio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tabs)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pCriterio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tabs)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         ArrayList<String> collections = this.ex4.getCollections();
@@ -149,20 +181,39 @@ public class Ex4Panel extends javax.swing.JPanel {
     private void cbCollectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCollectionsActionPerformed
         this.collection = (String) cbCollections.getSelectedItem();
         ex4.getFields(this.collection);
+        this.criterio = new AndCriterio(null);
+        this.pCriterio.removeAll();
+        this.pCriterio.add(this.criterio);
+        this.pCriterio.revalidate();
     }//GEN-LAST:event_cbCollectionsActionPerformed
-    
-    public static void update(){
-        obj.txtFilter.setText(String.format("db.%s.find(%s)", obj.collection, obj.criterio.getBson().toJson()));
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        inter.updateStatus("Pesquisando");
+        new Thread(() -> {
+            taResultado.setText(ex4.find(collection, findCriterio));
+            inter.updateStatus("Pesquisa Realizada");
+            tabs.setSelectedIndex(1);
+        }).start();
+
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    public static void update() {
+        obj.findCriterio = obj.criterio.getBson();
+        obj.txtFilter.setText(String.format("db.%s.find(%s)", obj.collection, obj.findCriterio.toJson()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
-    private javax.swing.JButton btnSelecionar;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JComboBox<String> cbCollections;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pCriterio;
+    private javax.swing.JTextArea taResultado;
+    private javax.swing.JTabbedPane tabs;
     private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables
 }

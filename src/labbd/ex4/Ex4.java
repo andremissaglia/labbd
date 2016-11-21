@@ -1,9 +1,11 @@
 package labbd.ex4;
 
 import com.mongodb.Block;
+import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import labbd.connection.MongoConnection;
 import org.bson.Document;
 
@@ -51,5 +53,15 @@ public class Ex4 {
                 
             }
         });
+    }
+    public String find(String collection, Document criterio){
+        StringBuilder sb = new StringBuilder();
+        MongoCollection col = MongoConnection.getCollection(collection);
+        col.find(criterio).forEach((Block)(Object t)->{
+            Document doc = (Document) t;
+            sb.append(doc.toJson());
+            sb.append('\n');
+        });
+        return sb.toString();
     }
 }

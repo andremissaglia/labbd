@@ -26,19 +26,19 @@ public class ExpCriterio extends Criterio{
                 doc.append(field, value);
                 break;
             case "<":
-                d2.append("$lt", value);
+                d2.append("$lt", Double.parseDouble(value));
                 doc.append(field, d2);
                 break;
             case "<=":
-                d2.append("$lte", value);
+                d2.append("$lte", Double.parseDouble(value));
                 doc.append(field, d2);
                 break;
             case ">":
-                d2.append("$gt", value);
+                d2.append("$gt", Double.parseDouble(value));
                 doc.append(field, d2);
                 break;
             case ">=":
-                d2.append("$gte", value);
+                d2.append("$gte", Double.parseDouble(value));
                 doc.append(field, d2);
                 break;
         }
