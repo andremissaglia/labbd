@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import labbd.ex4.SelecionarCriterio;
+import org.bson.Document;
 
 public class AddCriterio extends Criterio implements ActionListener {
 
@@ -26,4 +27,10 @@ public class AddCriterio extends Criterio implements ActionListener {
         }
         this.container.delete();
     }
+
+    @Override
+    public Document getBson() {
+        return null;
+    }
+    
 }

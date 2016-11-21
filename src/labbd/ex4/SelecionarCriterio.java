@@ -5,6 +5,7 @@ import labbd.ex4.Criterios.AddCriterio;
 import labbd.ex4.Criterios.AndCriterio;
 import labbd.ex4.Criterios.Criterio;
 import labbd.ex4.Criterios.ExpCriterio;
+import labbd.ex4.Criterios.NotCriterio;
 import labbd.ex4.Criterios.OrCriterio;
 import org.bson.conversions.Bson;
 
@@ -42,6 +43,7 @@ public class SelecionarCriterio extends javax.swing.JFrame {
         pLogico = new javax.swing.JPanel();
         btnAnd = new javax.swing.JButton();
         btnOr = new javax.swing.JButton();
+        btnNot = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -116,6 +118,13 @@ public class SelecionarCriterio extends javax.swing.JFrame {
             }
         });
 
+        btnNot.setText("NOT");
+        btnNot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNotActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pLogicoLayout = new javax.swing.GroupLayout(pLogico);
         pLogico.setLayout(pLogicoLayout);
         pLogicoLayout.setHorizontalGroup(
@@ -124,17 +133,20 @@ public class SelecionarCriterio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pLogicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAnd, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
-                    .addComponent(btnOr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnOr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pLogicoLayout.setVerticalGroup(
             pLogicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pLogicoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAnd, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnOr, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnAnd, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOr, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNot, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Lógica", pLogico);
@@ -171,12 +183,18 @@ public class SelecionarCriterio extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnSelectActionPerformed
 
+    private void btnNotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotActionPerformed
+        this.criterioContainer.addItem(new NotCriterio(criterioContainer), addCriterio);
+        this.dispose();
+    }//GEN-LAST:event_btnNotActionPerformed
+
     public static void addCriterio(AddCriterio add){
         new SelecionarCriterio(add).setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnd;
+    private javax.swing.JButton btnNot;
     private javax.swing.JButton btnOr;
     private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox<String> cbOp1;

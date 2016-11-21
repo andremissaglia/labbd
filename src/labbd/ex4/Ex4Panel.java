@@ -9,6 +9,7 @@ public class Ex4Panel extends javax.swing.JPanel {
     private final Ex4 ex4;
     private AndCriterio criterio;
     private String collection;
+    private static Ex4Panel obj;
     /**
      * Creates new form Ex4Panel
      * @param inter
@@ -19,7 +20,7 @@ public class Ex4Panel extends javax.swing.JPanel {
         this.ex4 = new Ex4();
         this.criterio = new AndCriterio(null);
         this.pCriterio.add(this.criterio);
-        
+        obj = this;
     }
 
     /**
@@ -149,7 +150,10 @@ public class Ex4Panel extends javax.swing.JPanel {
         this.collection = (String) cbCollections.getSelectedItem();
         ex4.getFields(this.collection);
     }//GEN-LAST:event_cbCollectionsActionPerformed
-
+    
+    public static void update(){
+        obj.txtFilter.setText(String.format("db.%s.find(%s)", obj.collection, obj.criterio.getBson().toJson()));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;

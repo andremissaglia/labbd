@@ -3,11 +3,11 @@ package labbd.ex4.Criterios;
 import javax.swing.JLabel;
 import org.bson.Document;
 
-public class AndCriterio extends BoolCriterio {
+public class NotCriterio extends BoolCriterio {
 
-    public AndCriterio(Criterio container) {
+    public NotCriterio(Criterio container) {
         super(container);
-        JLabel lbl = new JLabel("AND");
+        JLabel lbl = new JLabel("NOT");
         this.add(lbl);
         this.addItem(new AddCriterio(this));
     }
@@ -17,6 +17,8 @@ public class AndCriterio extends BoolCriterio {
         for(Criterio c : children){
             doc.putAll(c.getBson());
         }
-        return doc;
+        Document doc2 = new Document();
+        doc2.append("$not", doc);
+        return doc2;
     }
 }
