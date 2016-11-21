@@ -1,9 +1,12 @@
 package labbd.ex4;
 
+import com.mongodb.Block;
 import labbd.ex4.Criterios.AddCriterio;
 import labbd.ex4.Criterios.AndCriterio;
 import labbd.ex4.Criterios.Criterio;
+import labbd.ex4.Criterios.ExpCriterio;
 import labbd.ex4.Criterios.OrCriterio;
+import org.bson.conversions.Bson;
 
 public class SelecionarCriterio extends javax.swing.JFrame {
     private final Criterio criterioContainer;
@@ -12,6 +15,10 @@ public class SelecionarCriterio extends javax.swing.JFrame {
         initComponents();
         this.criterioContainer = add.getContainer();
         this.addCriterio = add;
+        cbOp1.removeAllItems();
+        Ex4.fieldsArray.forEach((String t) -> {
+            cbOp1.addItem(t);
+        });
     }
 
     /**
@@ -31,16 +38,12 @@ public class SelecionarCriterio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cbOperador = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
         tfValor2 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        cbOp2 = new javax.swing.JComboBox<>();
         pLogico = new javax.swing.JPanel();
         btnAnd = new javax.swing.JButton();
         btnOr = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnSelect.setText("Selecionar");
         btnSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -57,48 +60,6 @@ public class SelecionarCriterio extends javax.swing.JFrame {
 
         jLabel3.setText("Operando 2");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tfValor2, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tfValor2)
-                .addContainerGap())
-        );
-
-        jTabbedPane2.addTab("Valor", jPanel1);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cbOp2, 0, 369, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cbOp2)
-                .addContainerGap())
-        );
-
-        jTabbedPane2.addTab("Atributo", jPanel2);
-
         javax.swing.GroupLayout pExpressaoLayout = new javax.swing.GroupLayout(pExpressao);
         pExpressao.setLayout(pExpressaoLayout);
         pExpressaoLayout.setHorizontalGroup(
@@ -106,19 +67,17 @@ public class SelecionarCriterio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pExpressaoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pExpressaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnSelect, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pExpressaoLayout.createSequentialGroup()
                         .addGroup(pExpressaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pExpressaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbOp1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbOperador, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pExpressaoLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pExpressaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbOp1, 0, 311, Short.MAX_VALUE)
+                            .addComponent(cbOperador, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfValor2))))
                 .addContainerGap())
         );
         pExpressaoLayout.setVerticalGroup(
@@ -133,9 +92,9 @@ public class SelecionarCriterio extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(cbOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pExpressaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tfValor2, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSelect)
                 .addContainerGap())
@@ -175,7 +134,7 @@ public class SelecionarCriterio extends javax.swing.JFrame {
                 .addComponent(btnAnd, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnOr, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Lógica", pLogico);
@@ -188,7 +147,7 @@ public class SelecionarCriterio extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -199,14 +158,18 @@ public class SelecionarCriterio extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAndActionPerformed
 
-    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSelectActionPerformed
-
     private void btnOrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrActionPerformed
         this.criterioContainer.addItem(new OrCriterio(criterioContainer), addCriterio);
         this.dispose();
     }//GEN-LAST:event_btnOrActionPerformed
+
+    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
+        String field = ((String)cbOp1.getSelectedItem());
+        String op = ((String)cbOperador.getSelectedItem());
+        String value = tfValor2.getText();
+        this.criterioContainer.addItem(new ExpCriterio(criterioContainer, field, op, value), addCriterio);
+        this.dispose();
+    }//GEN-LAST:event_btnSelectActionPerformed
 
     public static void addCriterio(AddCriterio add){
         new SelecionarCriterio(add).setVisible(true);
@@ -217,15 +180,11 @@ public class SelecionarCriterio extends javax.swing.JFrame {
     private javax.swing.JButton btnOr;
     private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox<String> cbOp1;
-    private javax.swing.JComboBox<String> cbOp2;
     private javax.swing.JComboBox<String> cbOperador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPanel pExpressao;
     private javax.swing.JPanel pLogico;
     private javax.swing.JTextField tfValor2;

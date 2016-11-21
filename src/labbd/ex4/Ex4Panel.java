@@ -8,6 +8,7 @@ public class Ex4Panel extends javax.swing.JPanel {
     private final Interface inter;
     private final Ex4 ex4;
     private AndCriterio criterio;
+    private String collection;
     /**
      * Creates new form Ex4Panel
      * @param inter
@@ -42,6 +43,12 @@ public class Ex4Panel extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        cbCollections.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCollectionsActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Coleção:");
 
@@ -137,6 +144,11 @@ public class Ex4Panel extends javax.swing.JPanel {
             cbCollections.addItem(t);
         });
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void cbCollectionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCollectionsActionPerformed
+        this.collection = (String) cbCollections.getSelectedItem();
+        ex4.getFields(this.collection);
+    }//GEN-LAST:event_cbCollectionsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
