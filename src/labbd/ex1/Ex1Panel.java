@@ -11,14 +11,18 @@ import labbd.Interface;
  * @author andrebm
  */
 public class Ex1Panel extends javax.swing.JPanel {
+
     private final Interface inter;
+    private final Ex1 ex1;
     /**
      * Creates new form Ex1Panel
+     *
      * @param inter
      */
     public Ex1Panel(Interface inter) {
         initComponents();
         this.inter = inter;
+        ex1 = new Ex1();
     }
 
     /**
@@ -39,6 +43,7 @@ public class Ex1Panel extends javax.swing.JPanel {
         javax.swing.JPanel jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtaSaida = new javax.swing.JTextArea();
+        jbExec = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -101,15 +106,26 @@ public class Ex1Panel extends javax.swing.JPanel {
         jtaSaida.setRows(5);
         jScrollPane1.setViewportView(jtaSaida);
 
+        jbExec.setText("Executar Script");
+        jbExec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExecActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+            .addComponent(jbExec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbExec))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -129,12 +145,11 @@ public class Ex1Panel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGerarActionPerformed
-        Ex1 ex1 = new Ex1();
         String tabela = jtfTabela.getText();
         String arquivo = jtfArquivo.getText();
         String saida = ex1.oracle2Mongo(tabela);
         jtaSaida.setText(saida);
-        if(saida == null){
+        if (saida == null) {
             inter.updateStatus("Erro ao gerar script!");
             return;
         }
@@ -152,16 +167,22 @@ public class Ex1Panel extends javax.swing.JPanel {
     }//GEN-LAST:event_jbGerarActionPerformed
 
     private void jtfTabelaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtfTabelaFocusLost
-        if(jtfArquivo.getText().length() == 0){
-            jtfArquivo.setText(jtfTabela.getText().toLowerCase().concat(".txt"));
-        }
+        jtfArquivo.setText(jtfTabela.getText().toLowerCase().concat(".txt"));
     }//GEN-LAST:event_jtfTabelaFocusLost
+
+    private void jbExecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExecActionPerformed
+        if(ex1.hasScript()){
+            ex1.execute();
+            inter.updateStatus("Script executado!");
+        }
+    }//GEN-LAST:event_jbExecActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbExec;
     private javax.swing.JButton jbGerar;
     private javax.swing.JTextArea jtaSaida;
     private javax.swing.JTextField jtfArquivo;

@@ -3,13 +3,19 @@ package labbd.ex1;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Date;
+import labbd.connection.MongoConnection;
 import labbd.util.Column;
 import labbd.util.Table;
 import org.bson.Document;
 
 public class Ex1 {
-
+    private ArrayList<Document> inserts;
+    private String collection;
     public String oracle2Mongo(String tablename) {
+        inserts = new ArrayList<>();
+        collection = tablename;
         tablename = tablename.toUpperCase();
         try {
             // Metadados da tabela
@@ -35,6 +41,7 @@ public class Ex1 {
                     }
                 }
                 saida.append(String.format("db.%s.insert(%s)\n", tablename, doc.toJson()));
+                inserts.add(doc);
             }
             return saida.toString();
         } catch (SQLException ex) {
@@ -66,9 +73,21 @@ public class Ex1 {
                     doc.append(col.name, rs.getDouble(col.id));
                 }
                 break;
+            case Types.DATE:
+                Date d = new Date(rs.getDate(col.id).getTime());
+                doc.append(col.name, d);
+                break;
             default:
                 System.out.println(col.type);
                 throw new RuntimeException("Tipo não tratado");
         }
+    }
+    public void execute(){
+        inserts.forEach((Document doc) -> {
+            MongoConnection.getCollection(collection).insertOne(doc);
+        });
+    }
+    public boolean hasScript(){
+        return inserts != null;
     }
 }
